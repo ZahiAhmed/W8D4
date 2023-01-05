@@ -1,26 +1,27 @@
-const readline = require("readline");
+const reader = require("readline-sync");
 
-const reader = readline.createInterface({
-  input: process.stdin,
-  output: process.stdout
-});
+// const reader = readline.createInterface({
+//   input: process.stdin,
+//   output: process.stdout
+// });
 
 // Write this first.
 function askIfGreaterThan(el1, el2, callback) {
   // Prompt user to tell us whether el1 > el2; pass true back to the
   // callback if true; else false.
 
-  reader.question(`Is ${el1} greater than ${el2}? y/n`, (answer) => {
+  let answer = reader.question(`Is ${el1} greater than ${el2}? y/n \n`); 
     switch (answer.toLowerCase()) {
         case 'y':
             return callback(true);
         default:
             return callback(false);
     }
-  });
-
-
 }
+
+
+
+
 function swapped(bool){
     return bool;
 }
@@ -46,7 +47,11 @@ function innerBubbleSortLoop(arr, i, madeAnySwaps, outerBubbleSortLoop) {
 
         arr[i] = el2;
         arr[i+1] = el1;
+        madeAnySwaps = true;
     }
+
+    innerBubbleSortLoop(arr, i+1, madeAnySwaps, outerBubbleSortLoop);
+    
   }
 }
 
@@ -54,15 +59,21 @@ function innerBubbleSortLoop(arr, i, madeAnySwaps, outerBubbleSortLoop) {
 // Once you're done testing outerBubbleSortLoop, write absurdBubbleSort.
 
 function absurdBubbleSort(arr, sortCompletionCallback) {
+
   function outerBubbleSortLoop(madeAnySwaps) {
     // Begin an inner loop if you made any swaps. Otherwise, call
     // `sortCompletionCallback`.
+    if (madeAnySwaps){
+        innerBubbleSortLoop(arr, 0, false, outerBubbleSortLoop);
+    } else {
+        sortCompletionCallback(arr);
+    }
   }
-
-  // Kick the first outer loop off, starting `madeAnySwaps` as true.
+  outerBubbleSortLoop(true);
+  // Start the first outer loop off as `madeAnySwaps` = true.
 }
-
-absurdBubbleSort([3, 2, 1], function(arr) {
+absurdBubbleSort([3, 2, 1,4,6,3,2,5], function(arr) {
   console.log("Sorted array: " + JSON.stringify(arr));
-  reader.close();
+//   reader.close();
 });
+
