@@ -1,5 +1,5 @@
 class Clock {
-    constructor(hours= 0, mins = 0, seconds= 0) {
+    constructor(hours=0, mins=0, seconds=0) {
         // 1. Create a Date object.
         // 2. Store the hours, minutes, and seconds.
         // 3. Call printTime.
@@ -54,4 +54,29 @@ class Clock {
     }
 }
 
-const clock = new Clock(23, 59, 50);
+// const clock = new Clock(23, 59, 50);
+
+
+//addNumbers
+const readline = require("readline");
+
+const reader = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+});
+
+function addNumbers(sum, numsLeft, completionCallback) {
+    if (numsLeft > 0) {
+        reader.question("Enter a number:", (answer)=> {
+        let input = parseInt(answer);
+        console.log(sum += input);
+        addNumbers(sum, numsLeft-1, completionCallback);
+        })
+    } else {
+        completionCallback(sum);
+        reader.close();
+    }
+
+}
+
+addNumbers(0, 3, sum => console.log(`Total Sum: ${sum}`));
